@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratham — Content Creation & Digital Marketing Portfolio</title>
+
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           BLOCKFRAME DESIGN SYSTEM CSS VARIABLES
+           ========================================================================== */
+        :root {
+            /* Palette */
+            --black: #000000;
+            --white: #FFFFFF;
+            --offwhite: #FFFDF5;
+            --pink: #FE90E8;
+            --blue: #C0F7FE;
+            --green: #99E885;
+            --yellow: #F7CB46;
+            --cream: #FFDC8B;
+
+            /* Borders */
+            --border-primary: 4px solid var(--black);
+            --border-thin: 3px solid var(--black);
+
+            /* Shadows */
+            --shadow-default: 8px 8px 0px var(--black);
+            --shadow-small: 4px 4px 0px var(--black);
+            --shadow-hover: 6px 6px 0px var(--black);
+            --shadow-close-yellow: 12px 12px 0px var(--yellow);
+
+            /* Typography */
+            --font-display: 'Inter', sans-serif;
+            --font-mono: 'Space Grotesk', monospace;
+
+            /* Fixed stage defaults */
+            --stage-bg: #121212;
+            --slide-bg: var(--offwhite);
+        }
+
+        /* ==========================================================================
+           FIXED 16:9 STAGE BASE STYLES (viewport-base.css)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: var(--stage-bg);
+            font-family: var(--font-display);
+        }
+
+        .deck-viewport {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            background: var(--stage-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .deck-stage {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            transform-origin: 0 0;
+            background: var(--offwhite);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            padding: 60px 80px 110px 80px;
+            background: var(--offwhite);
+            transition: opacity 0.15s ease-in-out;
+        }
+
+        .slide.active,
+        .slide.visible {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        img,
+        video,
+        svg {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Slide Surface Colors Cycle */
+        .slide.bg-cream {
+            background: var(--cream);
+        }
+
+        .slide.bg-blue {
+            background: var(--blue);
+        }
+
+        .slide.bg-pink {
+            background: var(--pink);
+        }
+
+        .slide.bg-green {
+            background: var(--green);
+        }
+
+        .slide.bg-yellow {
+            background: var(--yellow);
+        }
+
+        .slide.bg-black {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* ==========================================================================
+           NEOBRUTALIST REUSABLE COMPONENTS & TYPOGRAPHY
+           ========================================================================== */
+
+        /* Eyebrow / Label Pill */
+        .label-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: var(--border-thin);
+            box-shadow: var(--shadow-small);
+            background: var(--white);
+            color: var(--black);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 0px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .label-pill.pill-pink {
+            background: var(--pink);
+        }
+
+        .label-pill.pill-blue {
+            background: var(--blue);
+        }
+
+        .label-pill.pill-green {
+            background: var(--green);
+        }
+
+        .label-pill.pill-yellow {
+            background: var(--yellow);
+        }
+
+        .label-pill.pill-cream {
+            background: var(--cream);
+        }
+
+        /* Typography Ladder */
+        .heading-xl {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 84px;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .heading-lg {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 54px;
+            line-height: 1.0;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .heading-md {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 36px;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .body-text {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 1.5;
+            color: var(--black);
+        }
+
+        .mono-text {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.04em;
+        }
+
+        /* Elevated Card */
+        .card-elevated {
+            border: var(--border-primary);
+            background: var(--white);
+            box-shadow: var(--shadow-default);
+            padding: 32px;
+            border-radius: 0px;
+            position: relative;
+        }
+
+        .card-flat {
+            border: var(--border-primary);
+            background: var(--white);
+            padding: 24px;
+            border-radius: 0px;
+        }
+
+        .card-small {
+            border: var(--border-thin);
+            background: var(--white);
+            box-shadow: var(--shadow-small);
+            padding: 20px;
+            border-radius: 0px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: var(--border-thin);
+            background: var(--yellow);
+            color: var(--black);
+            padding: 16px 36px;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 20px;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-small);
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-primary:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--black);
+        }
+
+        /* Decorative Elements */
+        .star-burst {
+            width: 48px;
+            height: 48px;
+            background: var(--pink);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            border: 2px solid var(--black);
+            display: inline-block;
+        }
+
+        .stat-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--black);
+            display: inline-block;
+        }
+
+        .tilt-left {
+            transform: rotate(-2deg);
+        }
+
+        .tilt-right {
+            transform: rotate(2deg);
+        }
+
+        .tilt-more-left {
+            transform: rotate(-4deg);
+        }
+
+        .tilt-more-right {
+            transform: rotate(4deg);
+        }
+
+        .corner-bracket {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-top: var(--border-thin);
+            border-left: var(--border-thin);
+        }
+
+        .corner-bracket.top-left {
+            top: 12px;
+            left: 12px;
+        }
+
+        .corner-bracket.bottom-right {
+            bottom: 12px;
+            right: 12px;
+            border-top: none;
+            border-left: none;
+            border-bottom: var(--border-thin);
+            border-right: var(--border-thin);
+        }
+
+        /* Slide Specific Layout Utilities */
+        .slide-header {
+            margin-bottom: 36px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            height: 100%;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 32px;
+        }
+
+        .grid-4col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Persistent Slide Navigation & Counter Chrome */
+        .deck-controls-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .slide-counter-pill {
+            border: var(--border-thin);
+            background: var(--white);
+            box-shadow: var(--shadow-small);
+            padding: 10px 24px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--black);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-btn-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .nav-btn {
+            width: 52px;
+            height: 52px;
+            border: var(--border-thin);
+            background: var(--white);
+            box-shadow: var(--shadow-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-hover);
+            background: var(--yellow);
+        }
+
+        .nav-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--black);
+        }
+
+        /* Inline Editor Hotzone */
+        .edit-hotzone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .edit-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border: var(--border-thin);
+            background: var(--yellow);
+            box-shadow: var(--shadow-small);
+            padding: 10px 16px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* High Impact Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.visible .reveal:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .slide.visible .reveal:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .slide.visible .reveal:nth-child(3) {
+            transition-delay: 0.25s;
+        }
+
+        .slide.visible .reveal:nth-child(4) {
+            transition-delay: 0.35s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="deck-viewport">
+        <!-- FIXED 1920x1080 STAGE -->
+        <main class="deck-stage" id="deckStage">
+
+            <!-- ==========================================================================
+                 SLIDE 1: COVER / HERO (Cream Surface)
+                 ========================================================================== -->
+            <section class="slide bg-cream active">
+                <div
+                    style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+
+                    <!-- Decorative Floating Badges -->
+                    <div style="position: absolute; top: 0px; right: 40px;" class="tilt-right reveal">
+                        <div class="card-small"
+                            style="background: var(--blue); font-family: var(--font-mono); font-weight: 700;">
+                            📍 MUMBAI, INDIA
+                        </div>
+                    </div>
+
+                    <!-- Main Hero Card -->
+                    <div class="card-elevated tilt-left reveal"
+                        style="background: var(--white); max-width: 1650px; width: 100%; margin: auto 0; padding: 40px;">
+                        <div class="corner-bracket top-left"></div>
+                        <div class="corner-bracket bottom-right"></div>
+                        <div style="display: flex; gap: 48px; align-items: center;">
+                            <div
+                                style="width: 420px; height: 420px; border: var(--border-primary); box-shadow: var(--shadow-small); overflow: hidden; flex-shrink: 0; background: var(--pink);">
+                                <img src="assets/me.jpg" alt="Pratham Profile Photo"
+                                    style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
+                            </div>
+                            <div style="flex: 1;">
+                                <h1 class="heading-xl reveal"
+                                    style="font-size: 72px; line-height: 0.95; margin-bottom: 16px;">
+                                    HI 👋, PRATHAM HERE
+                                </h1>
+                                <p class="body-text reveal"
+                                    style="font-size: 24px; font-weight: 500; line-height: 1.5; margin-bottom: 28px;">
+                                    I'm a Fresh Graduate with strong content creation, copywriting and digital marketing
+                                    skills.
+                                </p>
+                                <div class="reveal">
+                                    <a href="#slide-2" class="btn-primary"
+                                        onclick="window.deck.showSlide(1); return false;">
+                                        VIEW MY WORKS ➔
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 2: BOSTON INSTITUTE OF ANALYTICS (Blue Surface)
+                 ========================================================================== -->
+            <section class="slide bg-blue">
+                <div class="slide-header">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h2 class="heading-lg reveal">
+                                CONTENT CREATION & DIGITAL MARKETING INTERN
+                            </h2>
+                            <p class="mono-text reveal" style="font-size: 22px; color: var(--black); margin-top: 6px;">
+                                BOSTON INSTITUTE OF ANALYTICS (NAVI MUMBAI BRANCH)
+                            </p>
+                        </div>
+                        <div class="card-small tilt-right reveal"
+                            style="background: var(--white); width: 220px; text-align: center;">
+                            <img src="assets/company/boston-institute-of-analytics.jpg" alt="BIA Logo"
+                                style="max-height: 150px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2col" style="height: calc(100% - 180px);">
+                    <!-- Left Column: Scope & Key Outcome -->
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="card-elevated reveal" style="background: var(--white);">
+                            <h3 class="heading-md" style="font-size: 26px; margin-bottom: 12px;">ROLE & RESPONSIBILITIES
+                            </h3>
+                            <p class="body-text" style="font-size: 20px;">
+                                Boston Institute of Analytics is a professional training institute specializing in data
+                                science. In this role, I produced digital marketing campaigns for
+                                their Navi Mumbai branch.
+                            </p>
+                            <ul
+                                style="margin-top: 16px; padding-left: 20px; font-size: 19px; line-height: 1.7; font-family: var(--font-display); font-weight: 600;">
+                                <li>Created Carousel Posts, Videos & Reels</li>
+                                <li>Wrote Meta Ad Copies & Email Templates</li>
+                            </ul>
+                        </div>
+
+                        <!-- Objective Highlight Box -->
+                        <div class="card-elevated tilt-left reveal" style="background: var(--yellow);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span class="mono-text" style="text-transform: uppercase;">PRIMARY OBJECTIVE
+                                        ACHIEVED</span>
+                                    <h4 class="heading-lg" style="font-size: 38px; margin-top: 4px;">✅ FULLY BOOKED
+                                        CLASSES</h4>
+                                </div>
+                                <div style="font-size: 48px;">📈</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Visual Mockup -->
+                    <div class="card-elevated reveal"
+                        style="background: var(--white); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
+                        <div style=" overflow: hidden; background: #fafafa; max-height: 640px;">
+                            <img src="assets/BIA_marketing_mockup.png" alt="BIA Digital Marketing Mockup"
+                                style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 3: E-CELL SAKEC — DIGITAL CONTENT & STRATEGY (Pink Surface)
+                 ========================================================================== -->
+            <section class="slide bg-pink">
+                <div class="slide-header" style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h2 class="heading-lg reveal" style="font-size: 44px;">
+                                Content Creation Volunteer and Website Lead
+                            </h2>
+                            <p class="mono-text reveal" style="font-size: 20px; color: var(--black); margin-top: 4px;">
+                                E-CELL SAKEC (STUDENT-LED NONPROFIT ORGANISATION)
+                            </p>
+                        </div>
+                        <div class="card-small tilt-left reveal"
+                            style="background: var(--white); width: 220px; text-align: center; padding: 10px;">
+                            <img src="assets/company/ecell-logo.png" alt="E-Cell SAKEC Logo"
+                                style="max-height: 150px; filter:brightness(0);">
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="display: grid; grid-template-columns: 740px 1fr; gap: 32px; height: calc(100% - 150px); align-items: start;">
+                    <!-- Left Poster -->
+                    <img src="assets/website_is_live.webp" alt="Food Fiesta Website Is Live Poster"
+                        class="card-elevated reveal"
+                        style="width: 100%; height: 100%; object-fit: contain; padding: 0;">
+
+                    <!-- Right Column -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="card-elevated reveal" style="background: var(--white); padding: 24px;">
+                            <p class="body-text" style="font-size: 18px; margin-bottom: 14px;">
+                                E-Cell SAKEC is a student-led nonprofit organisation promoting entrepreneurship among
+                                students. In this role, I developed and launched digital content strategies for multiple
+                                events (Project Pillar, Food Fiesta), helping to establish our organisation's digital
+                                presence and expand awareness.
+
+
+                        </div>
+
+                        <div>
+                            <h3 class="heading-md reveal" style="font-size: 22px; margin-bottom: 12px;">THE IMPACT</h3>
+                            <div class="grid-2col reveal" style="gap: 16px;">
+                                <div class="card-small" style="background: var(--white); padding: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 24px;">👥</span>
+                                        <span style="font-size: 20px; font-weight: 900; color: var(--green);">↑</span>
+                                    </div>
+                                    <div class="heading-xl" style="font-size: 40px; margin: 4px 0 0 0;">600+</div>
+                                    <p class="mono-text" style="font-size: 13px; margin-top: 2px;">Attendees Gathered
+                                    </p>
+                                </div>
+
+                                <div class="card-small" style="background: var(--white); padding: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 24px;">📈</span>
+                                        <span style="font-size: 20px; font-weight: 900; color: var(--green);">↑</span>
+                                    </div>
+                                    <div class="heading-xl" style="font-size: 40px; margin: 4px 0 0 0;">PAGE 1</div>
+                                    <p class="mono-text" style="font-size: 13px; margin-top: 2px;">Organic Search
+                                        Ranking</p>
+                                </div>
+
+                                <div class="card-small" style="background: var(--white); padding: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 24px;">🎬</span>
+                                        <span style="font-size: 20px; font-weight: 900; color: var(--green);">↑</span>
+                                    </div>
+                                    <div class="heading-xl" style="font-size: 40px; margin: 4px 0 0 0;">3+</div>
+                                    <p class="mono-text" style="font-size: 13px; margin-top: 2px;">Digital Formats
+                                        Launched</p>
+                                </div>
+
+                                <div class="card-small" style="background: var(--white); padding: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 24px;">✅</span>
+                                        <span style="font-size: 20px; font-weight: 900; color: var(--green);">↑</span>
+                                    </div>
+                                    <div class="heading-xl" style="font-size: 40px; margin: 4px 0 0 0;">100%</div>
+                                    <p class="mono-text" style="font-size: 13px; margin-top: 2px;">Digital Presence
+                                        Established</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 4: E-CELL SAKEC — CONTENT CREATION & MEDIA TEASERS (Cream Surface)
+                 ========================================================================== -->
+            <section class="slide bg-cream">
+                <div class="slide-header" style="margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h2 class="heading-lg reveal" style="font-size: 42px;">
+                                CONTENT CREATION & TEASERS
+                            </h2>
+                            <p class="mono-text reveal" style="font-size: 18px; color: var(--black); margin-top: 4px;">
+                                E-CELL SAKEC (ZAIKA IN-APP ORDERING JOURNEY & FOOD FIESTA)
+                            </p>
+                        </div>
+                        <div class="card-small tilt-right reveal"
+                            style="background: var(--white); width: 220px; text-align: center; padding: 10px;">
+                            <img src="assets/company/ecell-logo.png" alt="E-Cell SAKEC Logo"
+                                style="max-height: 150px; filter:brightness(0);">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 16px; height: calc(100% - 140px);">
+                    <!-- Description Banner -->
+                    <div class="card-elevated reveal" style="background: var(--white); padding: 16px 24px;">
+                        <p class="body-text" style="font-size: 18px; line-height: 1.4;">
+                            Beyond digital content strategy, I actively supported a range of content creation
+                            activities, including editing videos, graphic design, and branding to increase social media
+                            engagement and reach, ultimately optimising event participation.
+                        </p>
+                    </div>
+
+                    <!-- Video & Thumbnails Row -->
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; flex: 1; min-height: 0; align-items: center; align-items: start;">
+                        <!-- Left: Landscape Video Player (16:9 Aspect Ratio) -->
+                        <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                            <video src="assets/zaika_how_to_app.mp4" controls autoplay loop muted
+                                class="card-elevated reveal"
+                                style="width: 100%; aspect-ratio: 16 / 9; max-height: 480px; object-fit: cover; padding: 0; background: #000;"></video>
+                        </div>
+
+                        <!-- Right: 4 Vertical Media Cards Grid (1 Vertical Video + 3 Posters - all 9:16 Aspect Ratio) -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; max-height: 520px; justify-items: center;">
+                            <video src="assets/live_now.mp4" controls autoplay loop muted class="card-elevated reveal"
+                                style="width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; padding: 0; background: #000;"></video>
+
+                            <img src="assets/zaika_teaser.jpg" alt="Zaika Teaser" class="card-elevated reveal"
+                                style="width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; padding: 0; background: var(--white);">
+
+                            <img src="assets/zaika_website.jpg" alt="Zaika Website Live" class="card-elevated reveal"
+                                style="width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; padding: 0; background: var(--white);">
+
+                            <img src="assets/zaika_usage_thumbnail.jpg" alt="Zaika Usage Thumbnail"
+                                class="card-elevated reveal"
+                                style="width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; padding: 0; background: var(--white);">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 4: INSPIRUS EDUCATION — WEBSITE & SEO (Green Surface)
+                 ========================================================================== -->
+            <section class="slide bg-green">
+                <div class="slide-header">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div class="label-pill pill-cream reveal">
+                                💻 PROJECT 01
+                            </div>
+                            <h2 class="heading-lg reveal">
+                                WEBSITE DESIGN & TECHNICAL SEO
+                            </h2>
+                            <p class="mono-text reveal" style="font-size: 22px; color: var(--black); margin-top: 6px;">
+                                INSPIRUS EDUCATION (Study Abroad Consultants)
+                            </p>
+                        </div>
+                        <div class="card-small tilt-right reveal"
+                            style="background: var(--white); width: 220px; text-align: center;">
+                            <img src="assets/company/inspirus-education.jpg" alt="Inspirus Logo"
+                                style="max-height: 150px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-1col" style="height: calc(100% - 180px);">
+                    <!-- Left Column: Scope Grid -->
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="card-elevated reveal" style="background: var(--white);">
+                            <h3 class="heading-md" style="font-size: 26px; margin-bottom: 12px;">PROJECT OVERVIEW</h3>
+                            <p class="body-text" style="font-size: 20px;">
+                                Developed the official website on WordPress ensuring fast load times, responsive design
+                                across mobile/desktop, and optimization for organic search growth.
+                            </p>
+                        </div>
+
+                        <div class="grid-2col reveal" style="gap: 16px;">
+                            <div class="card-small" style="background: var(--white);">
+                                <div class="mono-text" style="color: var(--black); font-weight: 700;">📐 9 PAGES
+                                    DESIGNED</div>
+                                <p class="body-text" style="font-size: 16px; margin-top: 6px;">Customized WordPress
+                                    themes, blogs, and lead forms.</p>
+                            </div>
+                            <div class="card-small" style="background: var(--white);">
+                                <div class="mono-text" style="color: var(--black); font-weight: 700;">🔍 TECHNICAL SEO
+                                </div>
+                                <p class="body-text" style="font-size: 16px; margin-top: 6px;">On-page SEO, speed
+                                    optimization, and meta tags.</p>
+                            </div>
+                            <div class="card-small" style="background: var(--white);">
+                                <div class="mono-text" style="color: var(--black); font-weight: 700;">🔌 PLUGINS &
+                                    INTEGRATION</div>
+                                <p class="body-text" style="font-size: 16px; margin-top: 6px;">Form integrations &
+                                    Google Analytics setup.</p>
+                            </div>
+                            <div class="card-small" style="background: var(--white);">
+                                <div class="mono-text" style="color: var(--black); font-weight: 700;">🛡️ WEBSITE
+                                    SECURITY</div>
+                                <p class="body-text" style="font-size: 16px; margin-top: 6px;">SSL</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Inspirus Website Mockup -->
+
+                    <img src="assets/inspirus-website-mockup.png" alt="Inspirus Website Mockup"
+                        style="width: 100%; height: 100%; object-fit: contain;">
+
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 5: UX DESIGN — LEARNSBAR APP (Yellow Surface)
+                 ========================================================================== -->
+            <section class="slide bg-white">
+                <div class="slide-header" style="margin-bottom: 16px;">
+                    <div class="label-pill pill-pink reveal" style="margin-bottom: 8px;">
+                        🎨 UI/UX DESIGN
+                    </div>
+                    <h2 class="heading-lg reveal" style="font-size: 38px; margin-bottom: 6px;">
+                        LEARNSBAR APP
+                    </h2>
+                    <p class="mono-text reveal" style="font-size: 20px; color: var(--black);">
+                        UI/UX mockups for an app built as part of an undergrad group project.
+                    </p>
+                </div>
+
+                <div class="reveal"
+                    style="display: flex; justify-content: center; align-items: center; gap: 48px; flex: 1; min-height: 0; width: 100%;">
+                    <!-- Left: Single Mobile Screen Mockup (Raw image, no elevated card) -->
+                    <div
+                        style="height: 100%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <img src="assets/learnsbar-mockup.png" alt="LearnSbar Mockup"
+                            style="max-height: 100%; width: auto; object-fit: contain;">
+                    </div>
+
+                    <!-- Right Stack: Direct card borders on images to eliminate all white space padding -->
+                    <div
+                        style="display: flex; flex-direction: column; gap: 20px; justify-content: center; width: 540px; flex-shrink: 0;">
+                        <img src="assets/learnsbar-image-1.png" alt="LearnSbar Screen 1" class="card-elevated"
+                            style="width: 100%; height: auto; padding: 0px; display: block; background: var(--white);">
+
+                        <img src="assets/learnsbar-image-2.png" alt="LearnSbar Screen 2" class="card-elevated"
+                            style="width: 100%; height: auto; padding: 0px; display: block; background: var(--white);">
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 6: TESTIMONIALS & ENDORSEMENTS (Cream Surface)
+                 ========================================================================== -->
+            <section class="slide bg-cream">
+                <div class="slide-header" style="margin-bottom: 24px;">
+                    <div class="label-pill pill-blue reveal" style="margin-bottom: 12px;">
+                        ⭐ RECOMMENDATIONS
+                    </div>
+                    <h2 class="heading-lg reveal" style="font-size: 42px;">
+                        HERE'S WHAT PEOPLE ARE SAYING ABOUT MY WORK
+                    </h2>
+                </div>
+
+                <div class="reveal"
+                    style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: start; margin-top: 24px;">
+                    <!-- Testimonial 1 -->
+                    <div class="card-elevated tilt-left"
+                        style="background: var(--white); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;">
+                        <div>
+                            <div
+                                style="font-size: 40px; line-height: 1; color: var(--pink); font-family: var(--font-display); font-weight: 900; margin-bottom: 8px;">
+                                “</div>
+                            <p class="body-text"
+                                style="font-size: 21px; font-weight: 600; font-style: italic; line-height: 1.5; color: var(--black);">
+                                "He showcases ability to bridge theoretical knowledge with practical applications to
+                                real-world problems."
+                            </p>
+                        </div>
+                        <div
+                            style="display: flex; gap: 16px; align-items: center; border-top: var(--border-thin); padding-top: 20px;">
+                            <div
+                                style="width: 60px; height: 60px; border: var(--border-thin); overflow: hidden; flex-shrink: 0; background: #eee;">
+                                <img src="assets/review/profile_photo_gopal.jpg" alt="Dr. Gopal Nanda"
+                                    style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);">
+                            </div>
+                            <div>
+                                <h4 class="mono-text" style="font-size: 17px; font-weight: 800; color: var(--black);">
+                                    DR. GOPAL NANDA</h4>
+                                <p class="mono-text" style="font-size: 13px; color: #555; margin-top: 2px;">PROFESSOR OF
+                                    MATHS, SAKEC</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="card-elevated"
+                        style="background: var(--white); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;">
+                        <div>
+                            <div
+                                style="font-size: 40px; line-height: 1; color: var(--green); font-family: var(--font-display); font-weight: 900; margin-bottom: 8px;">
+                                “</div>
+                            <p class="body-text"
+                                style="font-size: 21px; font-weight: 600; font-style: italic; line-height: 1.5; color: var(--black);">
+                                "Played a pivotal role in the seamless functionality and appealing aesthetics of the
+                                project."
+                            </p>
+                        </div>
+                        <div
+                            style="display: flex; gap: 16px; align-items: center; border-top: var(--border-thin); padding-top: 20px;">
+                            <div
+                                style="width: 60px; height: 60px; border: var(--border-thin); overflow: hidden; flex-shrink: 0; background: #eee;">
+                                <img src="assets/review/profile_photo_milind.webp" alt="Prof. Milind Khairnar"
+                                    style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);">
+                            </div>
+                            <div>
+                                <h4 class="mono-text" style="font-size: 17px; font-weight: 800; color: var(--black);">
+                                    MILIND KHAIRNAR</h4>
+                                <p class="mono-text" style="font-size: 13px; color: #555; margin-top: 2px;">PROFESSOR OF
+                                    AI & DS, SAKEC</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="card-elevated tilt-right"
+                        style="background: var(--white); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;">
+                        <div>
+                            <div
+                                style="font-size: 40px; line-height: 1; color: var(--yellow); font-family: var(--font-display); font-weight: 900; margin-bottom: 8px;">
+                                “</div>
+                            <p class="body-text"
+                                style="font-size: 21px; font-weight: 600; font-style: italic; line-height: 1.5; color: var(--black);">
+                                "He was ready with a roadmap and weekly objectives... even when faced with challenges,
+                                he was able to problem-solve and find an ultimately more effective method."
+                            </p>
+                        </div>
+                        <div
+                            style="display: flex; gap: 16px; align-items: center; border-top: var(--border-thin); padding-top: 20px;">
+                            <div
+                                style="width: 60px; height: 60px; border: var(--border-thin); overflow: hidden; flex-shrink: 0; background: #eee;">
+                                <img src="assets/review/profile_photo_leila.jpg" alt="Leila Boushehri"
+                                    style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);">
+                            </div>
+                            <div>
+                                <h4 class="mono-text" style="font-size: 17px; font-weight: 800; color: var(--black);">
+                                    LEILA BOUSHEHRI</h4>
+                                <p class="mono-text" style="font-size: 13px; color: #555; margin-top: 2px;">DATA
+                                    SCIENTIST, SENSE WORLDWIDE</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SLIDE 7: CONTACT / CALL TO ACTION (Inverted Black Surface)
+                 ========================================================================== -->
+            <section class="slide bg-black">
+                <div
+                    style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative;">
+
+                    <div class="label-pill pill-yellow reveal" style="margin-bottom: 28px;">
+                        🎯 LET'S CONNECT
+                    </div>
+
+                    <!-- Inverted Brutalist Close Frame (4px white border, 12px yellow shadow) -->
+                    <div class="reveal"
+                        style="border: 4px solid var(--white); box-shadow: var(--shadow-close-yellow); padding: 60px 80px; background: var(--black); max-width: 1300px; position: relative;">
+                        <div class="star-burst"
+                            style="position: absolute; top: -24px; left: -24px; background: var(--yellow);"></div>
+                        <div class="star-burst"
+                            style="position: absolute; bottom: -24px; right: -24px; background: var(--pink);"></div>
+
+                        <h2 class="heading-xl" style="color: var(--white); font-size: 72px; margin-bottom: 20px;">
+                            DID MY MARKETING WORK ON YOU?
+                        </h2>
+
+                        <p class="body-text"
+                            style="color: var(--cream); font-size: 28px; font-weight: 600; max-width: 1000px; margin: 0 auto 40px auto;">
+                            I'm available for full-time roles in Content Creation and Digital Marketing. Let's create
+                            impactful campaigns together!
+                        </p>
+
+                        <div style="display: flex; gap: 32px; justify-content: center; align-items: center;">
+                            <a href="https://linkedin.com/in/prathamskk" target="_blank" class="btn-primary"
+                                style="font-size: 22px;">
+                                💼 CONNECT ON LINKEDIN : /in/prathamskk
+                            </a>
+                            <a href="mailto:prathamskk@gmail.com" class="btn-primary"
+                                style="background: var(--pink); font-size: 22px;">
+                                📧 EMAIL ME : prathamskk@gmail.com
+                            </a>
+                            <a href="tel:+91 8108980846" class="btn-primary"
+                                style="background: var(--pink); font-size: 22px;">
+                                📞 Call me : +918108980846
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ==========================================================================
+                 SLIDE 8: SKILLS & TOOLKIT MATRIX (Pink Surface)
+                 ========================================================================== -->
+            <section class="slide bg-pink">
+                <div class="slide-header">
+                    <div class="label-pill pill-yellow reveal">
+                        🛠️ CAPABILITIES & STACK
+                    </div>
+                    <h2 class="heading-lg reveal">
+                        WHAT I WORK WITH
+                    </h2>
+                </div>
+
+                <div class="grid-2col reveal" style="height: calc(100% - 180px);">
+                    <!-- Left: Core Skills -->
+                    <div class="card-elevated"
+                        style="background: var(--white); display: flex; flex-direction: column; justify-content: flex-start;">
+                        <h3 class="heading-md"
+                            style="font-size: 28px; margin-bottom: 20px; border-bottom: var(--border-thin); padding-bottom: 12px;">
+                            CORE SKILLS
+                        </h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                            <div class="mono-text"
+                                style="background: var(--yellow); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                ✍️ Content Creation
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--blue); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                📈 Digital Marketing
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--green); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                📝 Copywriting
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--cream); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                🎨 UI/UX Design
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--pink); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                🔍 Search Engine Optimization (SEO)
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--yellow); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                💻 Web Development
+                            </div>
+                            <div class="mono-text"
+                                style="background: var(--blue); padding: 12px 20px; border: var(--border-thin); box-shadow: var(--shadow-small); font-size: 18px; font-weight: 700;">
+                                📊 Data Analytics
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Tool Logos Matrix -->
+                    <div class="card-elevated"
+                        style="background: var(--white); display: flex; flex-direction: column; justify-content: flex-start;">
+                        <h3 class="heading-md"
+                            style="font-size: 28px; margin-bottom: 20px; border-bottom: var(--border-thin); padding-bottom: 12px;">
+                            TOOLS & PLATFORMS
+                        </h3>
+
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                            <!-- Meta -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/meta-logo.jpg" alt="Meta Ads"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">META ADS</p>
+                            </div>
+                            <!-- Google Ads -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/google_ads-icon.svg" alt="Google Ads"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">GOOGLE ADS</p>
+                            </div>
+                            <!-- HubSpot -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/hubspot-logo.png" alt="HubSpot"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">HUBSPOT</p>
+                            </div>
+                            <!-- Google Analytics -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/google_analytics-icon.svg" alt="Google Analytics"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">ANALYTICS</p>
+                            </div>
+                            <!-- Search Console -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/google-search-console.svg" alt="Search Console"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">SEARCH CONSOLE</p>
+                            </div>
+                            <!-- Adobe Creative Cloud -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/adobe-creative-cloud.svg" alt="Adobe CC"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">ADOBE CC</p>
+                            </div>
+                            <!-- CapCut -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/capcut-logo.jpg" alt="CapCut"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">CAPCUT</p>
+                            </div>
+                            <!-- Figma -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/figma-icon.svg" alt="Figma"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">FIGMA</p>
+                            </div>
+                            <!-- Power BI -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/powerbi-logo.svg" alt="Power BI"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">POWER BI</p>
+                            </div>
+                            <!-- Microsoft 365 -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/microsoft-365-logo.jpg" alt="M365"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">MS 365</p>
+                            </div>
+                            <!-- Python -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/Python-logo.svg" alt="Python"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">PYTHON</p>
+                            </div>
+                            <!-- Google Trends -->
+                            <div class="card-small" style="text-align: center; padding: 12px;">
+                                <img src="assets/logos/google-trends.svg" alt="Trends"
+                                    style="height: 40px; object-fit: contain;">
+                                <p class="mono-text" style="font-size: 12px; margin-top: 6px;">TRENDS</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==========================================================================
+                 SLIDE 9: MISCELLANEOUS PROJECTS (Blue Surface)
+                 ========================================================================== -->
+            <section class="slide bg-blue">
+                <div class="slide-header">
+
+                    <h2 class="heading-lg reveal">
+                        SOME MORE BEAUTIFUL WORK
+                    </h2>
+                </div>
+
+                <div class="grid-2col">
+
+                    <img src="assets/social-listening-tool-slides-mockup.png" alt="Social Listening Tool"
+                        style="width: 100%; height: 100%; object-fit: contain;">
+
+                    <img src="assets/social_listening_diagram.png" alt="Social Listening Tool"
+                        style="width: 100%; height: 100%; object-fit: contain;">
+
+                </div>
+
+            </section>
+
+
+
+        </main>
+
+        <!-- PERSISTENT SLIDE CONTROLS & COUNTER -->
+        <div class="deck-controls-bar">
+            <div class="slide-counter-pill" id="slideCounter">
+                01 / 09
+            </div>
+            <div class="nav-btn-group">
+                <button class="nav-btn" id="prevBtn" title="Previous slide (←)">◄</button>
+                <button class="nav-btn" id="nextBtn" title="Next slide (→)">►</button>
+            </div>
+        </div>
+
+        <!-- INLINE EDITOR TOGGLE HOTZONE -->
+        <div class="edit-hotzone"></div>
+        <button class="edit-toggle" id="editToggle" title="Toggle edit mode (E key)">✏️ EDIT MODE</button>
+    </div>
+
+    <!-- ==========================================================================
+         PRESENTATION CONTROLLER & STAGE SCALER SCRIPT
+         ========================================================================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.stage = document.getElementById('deckStage');
+                this.counter = document.getElementById('slideCounter');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.isEditMode = false;
+
+                this.setupStageScale();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavButtons();
+                this.setupInlineEditor();
+
+                // Restore last slide index from URL hash or localStorage across hot reloads
+                const hashIndex = parseInt((window.location.hash || '').replace('#slide-', '')) - 1;
+                const savedIndex = parseInt(localStorage.getItem('currentSlide') || '0');
+                const initialIndex = !isNaN(hashIndex) && hashIndex >= 0 ? hashIndex : (!isNaN(savedIndex) && savedIndex >= 0 ? savedIndex : 0);
+
+                window.addEventListener('hashchange', () => {
+                    const idx = parseInt((window.location.hash || '').replace('#slide-', '')) - 1;
+                    if (!isNaN(idx) && idx >= 0 && idx !== this.currentSlide) {
+                        this.showSlide(idx);
+                    }
+                });
+
+                this.showSlide(initialIndex);
+            }
+
+            setupStageScale() {
+                const scale = () => {
+                    const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                    const x = (window.innerWidth - 1920 * factor) / 2;
+                    const y = (window.innerHeight - 1080 * factor) / 2;
+                    this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+                };
+                scale();
+                window.addEventListener('resize', scale);
+            }
+
+            setupNavButtons() {
+                this.prevBtn.addEventListener('click', () => this.prevSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    // Do not navigate if user is currently editing text in contenteditable mode
+                    if (e.target.isContentEditable || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                        return;
+                    }
+
+                    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                        e.preventDefault();
+                        this.nextSlide();
+                    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                        e.preventDefault();
+                        this.prevSlide();
+                    } else if (e.key === 'e' || e.key === 'E') {
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startX = 0;
+                let startY = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                });
+
+                document.addEventListener('touchend', (e) => {
+                    const diffX = e.changedTouches[0].clientX - startX;
+                    const diffY = e.changedTouches[0].clientY - startY;
+
+                    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+                        if (diffX < 0) this.nextSlide();
+                        else this.prevSlide();
+                    }
+                });
+            }
+
+            showSlide(index) {
+                this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+
+                this.slides.forEach((slide, i) => {
+                    const isActive = i === this.currentSlide;
+                    slide.classList.toggle('active', isActive);
+                    slide.classList.toggle('visible', isActive);
+                });
+
+                // Update Counter
+                const formattedCurrent = String(this.currentSlide + 1).padStart(2, '0');
+                const formattedTotal = String(this.slides.length).padStart(2, '0');
+                this.counter.textContent = `${formattedCurrent} / ${formattedTotal}`;
+
+                // Persist current slide index in localStorage & URL hash across hot reloads
+                localStorage.setItem('currentSlide', this.currentSlide);
+                if (history.replaceState) {
+                    history.replaceState(null, null, `#slide-${this.currentSlide + 1}`);
+                }
+            }
+
+            nextSlide() {
+                this.showSlide(this.currentSlide + 1);
+            }
+
+            prevSlide() {
+                this.showSlide(this.currentSlide - 1);
+            }
+
+            setupInlineEditor() {
+                const hotzone = document.querySelector('.edit-hotzone');
+                const editToggle = document.getElementById('editToggle');
+                let hideTimeout = null;
+
+                hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(hideTimeout);
+                    editToggle.classList.add('show');
+                });
+                hotzone.addEventListener('mouseleave', () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isEditMode) editToggle.classList.remove('show');
+                    }, 400);
+                });
+                editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(hideTimeout);
+                });
+                editToggle.addEventListener('mouseleave', () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isEditMode) editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                editToggle.addEventListener('click', () => {
+                    this.toggleEditMode();
+                });
+            }
+
+            toggleEditMode() {
+                this.isEditMode = !this.isEditMode;
+                const editToggle = document.getElementById('editToggle');
+                editToggle.classList.toggle('active', this.isEditMode);
+                editToggle.textContent = this.isEditMode ? '💾 SAVING ACTIVE' : '✏️ EDIT MODE';
+
+                const editables = document.querySelectorAll('h1, h2, h3, h4, p, li, .mono-text, .label-pill');
+                editables.forEach(el => {
+                    el.contentEditable = this.isEditMode ? "true" : "false";
+                    if (this.isEditMode) {
+                        el.style.outline = "2px dashed #FE90E8";
+                    } else {
+                        el.style.outline = "none";
+                    }
+                });
+            }
+        }
+
+        // Initialize Presentation Controller
+        window.deck = new SlidePresentation();
+    </script>
+</body>
+
+</html>
